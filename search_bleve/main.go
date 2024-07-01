@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"sort"
 	"strings"
 	"sync"
 	"time"
@@ -164,7 +165,7 @@ func main() {
 	}
 
 	// Index songs in batches with concurrency
-	batchSize := 100
+	batchSize := 500
 	numWorkers := 4
 	songChannel := make(chan Song, len(songs))
 	for _, song := range songs {
@@ -260,113 +261,58 @@ func search(t string) {
 	start := time.Now()
 
 	terms := strings.Fields(strings.ToLower(t))
-	// var queries []query.Query
-	results := make(chan *bleve.SearchResult)
+	results := make(chan *bleve.SearchResult, len(terms))
+	done := make(chan struct{})
+
+	// Use a worker pool pattern
+	workerCount := 5
+	var wg sync.WaitGroup
+	wg.Add(workerCount)
+	termChan := make(chan string, len(terms))
+
+	for i := 0; i < workerCount; i++ {
+		go func() {
+			defer wg.Done()
+			for term := range termChan {
+				results <- performSearch(index, term)
+			}
+		}()
+	}
 
 	for _, term := range terms {
-		go func(term string) {
-			var subQueries []query.Query
-
-			// number
-			exactMatchQueryNumber := query.NewTermQuery(term)
-			exactMatchQueryNumber.SetField("number")
-			exactMatchQueryNumber.SetBoost(20.0)
-			subQueries = append(subQueries, exactMatchQueryNumber)
-
-			matchQueryNumber := query.NewMatchQuery(term)
-			matchQueryNumber.SetField("number")
-			matchQueryNumber.Analyzer = "koCJKEdgeNgram"
-			matchQueryNumber.SetBoost(10.0)
-			subQueries = append(subQueries, matchQueryNumber)
-
-			wildcardQueryNumber := query.NewWildcardQuery("*" + term + "*")
-			wildcardQueryNumber.SetField("number")
-			wildcardQueryNumber.SetBoost(5.0)
-			subQueries = append(subQueries, wildcardQueryNumber)
-
-			// Korean and English titles
-			subQueries = append(subQueries, buildHigherQueries(term, "title_kor", "koCJKEdgeNgram")...)
-			subQueries = append(subQueries, buildHigherQueries(term, "title_eng", "enEdgeNgram")...)
-
-			// Korean and English singers
-			subQueries = append(subQueries, buildHigherQueries(term, "singer_kor", "koCJKEdgeNgram")...)
-			subQueries = append(subQueries, buildHigherQueries(term, "singer_eng", "enEdgeNgram")...)
-
-			// Full (Korean and English)
-			subQueries = append(subQueries, buildQueries(term, "full_kor", "koCJKEdgeNgram")...)
-			subQueries = append(subQueries, buildQueries(term, "full_eng", "enEdgeNgram")...)
-
-			// Initial consonants (Korean and English)
-			subQueries = append(subQueries, buildQueries(term, "icTitle_kor", "koCJKEdgeNgram")...)
-			subQueries = append(subQueries, buildQueries(term, "icTitle_eng", "enEdgeNgram")...)
-			subQueries = append(subQueries, buildQueries(term, "icSinger_kor", "koCJKEdgeNgram")...)
-			subQueries = append(subQueries, buildQueries(term, "icSinger_eng", "enEdgeNgram")...)
-
-			disjunctionQuery := bleve.NewDisjunctionQuery(subQueries...)
-			searchRequest := bleve.NewSearchRequest(disjunctionQuery)
-			searchRequest.Fields = []string{"*"}
-			searchRequest.Size = 15 // Limit the number of results
-
-			// Add sorting by score and number
-			searchRequest.SortBy([]string{"-_score", "number"})
-
-			searchResult, err := index.Search(searchRequest)
-			if err != nil {
-				log.Printf("Error performing search for term '%s': %v", term, err)
-				results <- nil
-			} else {
-				results <- searchResult
-			}
-		}(term)
+		termChan <- term
 	}
+	close(termChan)
 
-	var finalResults bleve.SearchResult
-	finalResults.Hits = make([]*bleve_search.DocumentMatch, 0)
+	go func() {
+		wg.Wait()
+		close(results)
+		done <- struct{}{}
+	}()
 
-	for range terms {
-		searchResult := <-results
-		if searchResult != nil {
-			finalResults.Hits = append(finalResults.Hits, searchResult.Hits...)
-		}
-	}
-
-	close(results)
-
-	// Use a map to consolidate results
 	uniqueSongs := make(map[string]*bleve_search.DocumentMatch)
-	for _, hit := range finalResults.Hits {
-		title := ""
-		singer := ""
-		if val, ok := hit.Fields["title_kor"]; ok {
-			title = val.(string)
-		} else if val, ok := hit.Fields["title_eng"]; ok {
-			title = val.(string)
-		}
-		if val, ok := hit.Fields["singer_kor"]; ok {
-			singer = val.(string)
-		} else if val, ok := hit.Fields["singer_eng"]; ok {
-			singer = val.(string)
-		}
-		key := fmt.Sprintf("%s-%s", title, singer)
-		if existingHit, exists := uniqueSongs[key]; exists {
-			// Append the new number to the existing entry
-			existingNumbers := existingHit.Fields["number"].(string)
-			newNumber := hit.Fields["number"].(string)
-			existingHit.Fields["number"] = fmt.Sprintf("%s,%s", existingNumbers, newNumber)
-		} else {
-			uniqueSongs[key] = hit
+	for searchResult := range results {
+		if searchResult != nil {
+			consolidateResults(searchResult, uniqueSongs)
 		}
 	}
+	<-done
 
 	if len(uniqueSongs) > 0 {
 		log.Printf("💖 found %d unique songs", len(uniqueSongs))
+
+		// Convert the map to a slice and sort it by score
+		sortedResults := make([]*bleve_search.DocumentMatch, 0, len(uniqueSongs))
 		for _, hit := range uniqueSongs {
-			if full, ok := hit.Fields["full_kor"]; ok {
-				log.Printf("Full 노래: %v", full)
-			}
-			if full, ok := hit.Fields["full_eng"]; ok {
-				log.Printf("Full song: %v", full)
-			}
+			sortedResults = append(sortedResults, hit)
+		}
+		sort.Slice(sortedResults, func(i, j int) bool {
+			return sortedResults[i].Score > sortedResults[j].Score
+		})
+
+		// Print sorted results
+		for _, hit := range sortedResults {
+			log.Printf("Full 노래: %v", extractFullSong(hit))
 		}
 	} else {
 		log.Println("No search results found")
@@ -375,6 +321,60 @@ func search(t string) {
 	end := time.Now()
 	duration := end.Sub(start)
 	log.Printf("Function runtime: %v", duration)
+}
+
+func performSearch(index bleve.Index, term string) *bleve.SearchResult {
+	var subQueries []query.Query
+
+	// number
+	exactMatchQueryNumber := query.NewTermQuery(term)
+	exactMatchQueryNumber.SetField("number")
+	exactMatchQueryNumber.SetBoost(20.0)
+	subQueries = append(subQueries, exactMatchQueryNumber)
+
+	matchQueryNumber := query.NewMatchQuery(term)
+	matchQueryNumber.SetField("number")
+	matchQueryNumber.Analyzer = "koCJKEdgeNgram"
+	matchQueryNumber.SetBoost(10.0)
+	subQueries = append(subQueries, matchQueryNumber)
+
+	wildcardQueryNumber := query.NewWildcardQuery("*" + term + "*")
+	wildcardQueryNumber.SetField("number")
+	wildcardQueryNumber.SetBoost(5.0)
+	subQueries = append(subQueries, wildcardQueryNumber)
+
+	// Korean and English titles
+	subQueries = append(subQueries, buildHigherQueries(term, "title_kor", "koCJKEdgeNgram")...)
+	subQueries = append(subQueries, buildHigherQueries(term, "title_eng", "enEdgeNgram")...)
+
+	// Korean and English singers
+	subQueries = append(subQueries, buildHigherQueries(term, "singer_kor", "koCJKEdgeNgram")...)
+	subQueries = append(subQueries, buildHigherQueries(term, "singer_eng", "enEdgeNgram")...)
+
+	// Full (Korean and English)
+	subQueries = append(subQueries, buildQueries(term, "full_kor", "koCJKEdgeNgram")...)
+	subQueries = append(subQueries, buildQueries(term, "full_eng", "enEdgeNgram")...)
+
+	// Initial consonants (Korean and English)
+	subQueries = append(subQueries, buildQueries(term, "icTitle_kor", "koCJKEdgeNgram")...)
+	subQueries = append(subQueries, buildQueries(term, "icTitle_eng", "enEdgeNgram")...)
+	subQueries = append(subQueries, buildQueries(term, "icSinger_kor", "koCJKEdgeNgram")...)
+	subQueries = append(subQueries, buildQueries(term, "icSinger_eng", "enEdgeNgram")...)
+
+	disjunctionQuery := bleve.NewDisjunctionQuery(subQueries...)
+	searchRequest := bleve.NewSearchRequest(disjunctionQuery)
+	searchRequest.Fields = []string{"*"}
+	searchRequest.Size = 15 // Limit the number of results
+
+	// Add sorting by score and number
+	searchRequest.SortBy([]string{"-_score", "number"})
+
+	searchResult, err := index.Search(searchRequest)
+	if err != nil {
+		log.Printf("Error performing search for term '%s': %v", term, err)
+		return nil
+	}
+	return searchResult
 }
 
 func buildHigherQueries(term, field, analyzer string) []query.Query {
@@ -400,7 +400,6 @@ func buildHigherQueries(term, field, analyzer string) []query.Query {
 }
 
 func buildQueries(term, field, analyzer string) []query.Query {
-
 	termQuery := query.NewTermQuery(term)
 	termQuery.SetField(field)
 	termQuery.SetBoost(20.0)
@@ -419,6 +418,46 @@ func buildQueries(term, field, analyzer string) []query.Query {
 		matchQuery,
 		wildQuery,
 	}
+}
+
+func consolidateResults(searchResult *bleve.SearchResult, uniqueSongs map[string]*bleve_search.DocumentMatch) {
+	for _, hit := range searchResult.Hits {
+		title, singer := extractTitleAndSinger(hit)
+		key := fmt.Sprintf("%s-%s", title, singer)
+		if existingHit, exists := uniqueSongs[key]; exists {
+			existingNumbers := existingHit.Fields["number"].(string)
+			newNumber := hit.Fields["number"].(string)
+			existingHit.Fields["number"] = fmt.Sprintf("%s,%s", existingNumbers, newNumber)
+		} else {
+			uniqueSongs[key] = hit
+		}
+	}
+}
+
+func extractTitleAndSinger(hit *bleve_search.DocumentMatch) (string, string) {
+	title := ""
+	singer := ""
+	if val, ok := hit.Fields["title_kor"]; ok {
+		title = val.(string)
+	} else if val, ok := hit.Fields["title_eng"]; ok {
+		title = val.(string)
+	}
+	if val, ok := hit.Fields["singer_kor"]; ok {
+		singer = val.(string)
+	} else if val, ok := hit.Fields["singer_eng"]; ok {
+		singer = val.(string)
+	}
+	return title, singer
+}
+
+func extractFullSong(hit *bleve_search.DocumentMatch) string {
+	if full, ok := hit.Fields["full_kor"]; ok {
+		return full.(string)
+	}
+	if full, ok := hit.Fields["full_eng"]; ok {
+		return full.(string)
+	}
+	return ""
 }
 
 func getFullText(song Song) string {
