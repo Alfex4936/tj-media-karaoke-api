@@ -1,0 +1,37 @@
+{
+  "name": "tjmedia-song-search",
+  "version": "0.1.0",
+  "description": "Demo of tjmedia song search",
+  "keywords": [],
+  "main": "src/index.js",
+  "homepage": "https://my-karaoke.github.io/",
+  "dependencies": {
+    "@meilisearch/instant-meilisearch": "0.17.0",
+    "instantsearch.css": "8.1.0",
+    "lodash.debounce": "^4.0.8",
+    "react": "17.0.1",
+    "react-dom": "17.0.1",
+    "react-instantsearch": "7.7.0",
+    "react-instantsearch-dom": "^6.40.4",
+    "react-modal": "^3.16.1",
+    "react-scripts": "3.0.1"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "gh-pages": "^6.1.1",
+    "typescript": "3.8.3"
+  },
+  "scripts": {
+    "start": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts start",
+    "build": "cross-env NODE_OPTIONS=--openssl-legacy-provider react-scripts build",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
+}

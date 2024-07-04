@@ -1,5 +1,7 @@
 # TJ 코인 노래방 노래 검색 API
 
+![1](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/5c816a29-1b55-4461-b2b6-fa169766aae1)
+
 ![demo](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/3d8e7b67-7dcd-47d6-9d69-5ec0a44eeac6)
 
 이 프로젝트는 코인 노래방 데이터베이스에서 노래를 검색할 수 있는 간단하고 효율적인 API입니다.
