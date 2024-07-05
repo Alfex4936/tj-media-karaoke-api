@@ -1,35 +1,38 @@
 # TJ 코인 노래방 노래 검색 API
 
-![1](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/5c816a29-1b55-4461-b2b6-fa169766aae1)
+![demo1](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/aae6a958-fa3c-435c-be34-909d026255cb)
 
-![demo](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/3d8e7b67-7dcd-47d6-9d69-5ec0a44eeac6)
+![demo2](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/3d8e7b67-7dcd-47d6-9d69-5ec0a44eeac6)
 
 이 프로젝트는 코인 노래방 데이터베이스에서 노래를 검색할 수 있는 간단하고 효율적인 API입니다.
 
 API를 통해 코인 노래방에 가기 전에 쉽게 노래를 찾을 수 있습니다.
 
 > 미리 모든 곡들을 다운로드해서, tj미디어의 검색 기능을 사용하지 않습니다. (직접 구현)
->
-> 영어, 한국 곡들만 지원 예정
 
 ## TODO
 
 - [ ] 팝송 국가 세분화 하기
   - [x] FR (프랑스) 곡 구분
-  - [ ] SP (스페인) 곡 구분
+  - [x] SPA (스페인) 곡 구분
+  - [x] ITA (이탈리아) 곡 구분
+  - [x] PRT (포르투갈) 곡 구분
+  - [x] PHL (필리핀) 곡 구분
+  - [x] ROU (루마니아) 곡 구분
+  - [x] GER (독일) 곡 구분
 - [x] 검색 인덱싱 직접하기 ([Go Bleve](https://github.com/blevesearch/bleve/) [Apache Lucene like])
   - [x] 한글 초성 검색
   - [x] 영어 초성 검색 ("I Want you" -> "iwy")
-  - [x] TJ 곡 DB 생성 (정확하지 않을 수도 있음)
-  - [x] 한글/영어 곡 검색 구분
-  - [x] 작사/작곡가 검색 가능
+  - [x] 일본어 로마자 변환 ("相思相愛" -> "Sousi souai", powered by [cutlet](https://github.com/polm/cutlet))
+  - [x] TJ 곡 DB 생성 (정확하지 않을 수도 있음, 2024년 7월까지 기준)
+  - [x] 국가별 곡 검색 구분
+  - [x] 작사/작곡가 검색
 - [ ] 서버 구현
   - [ ] API 셋업
   - [ ] DB 셋업
   - [ ] ...
 
-## 예제
-
+## bleve 예제
 
 ```bash
 

@@ -23,14 +23,20 @@ const { searchClient } = instantMeiliSearch(
   }
 );
 
+const refreshPage = () => {
+  window.location.reload();
+};
+
 const App = () => (
   <div className="ais-InstantSearch">
     <h1>
       <a
-      href="https://my-karaoke.github.io/"
-      target="_blank"
-      rel="noopener noreferrer"
-    >TJ미디어 노래 검색 Demo</a>
+        href="#"
+        onClick={refreshPage}
+        style={{ cursor: "pointer", color: "inherit", textDecoration: "inherit" }}
+      >
+        TJ미디어 노래 검색 Demo
+      </a>
     </h1>
     <h2>
       노래 검색{" "}
