@@ -2,3 +2,4 @@
 songs.json
 songs.bleve
 node_modules
+.env
