@@ -7,10 +7,13 @@
   "homepage": "https://my-karaoke.github.io/",
   "dependencies": {
     "@meilisearch/instant-meilisearch": "0.17.0",
+    "i18next": "^23.11.5",
+    "i18next-browser-languagedetector": "^8.0.0",
     "instantsearch.css": "8.1.0",
     "lodash.debounce": "^4.0.8",
     "react": "17.0.1",
     "react-dom": "17.0.1",
+    "react-i18next": "^14.1.2",
     "react-instantsearch": "7.7.0",
     "react-instantsearch-dom": "^6.40.4",
     "react-modal": "^3.16.1",

@@ -1,0 +1,10 @@
+{
+    "welcome": "TJメディアの歌検索デモ",
+    "searchSong": "歌を検索",
+    "description": "TJメディアの歌や歌詞を検索してみてください。（2024年7月まで正確でない場合があります）",
+    "searchPlaceholder": "歌を検索してください...",
+    "country": "国",
+    "relevancyLabel": "関連性",
+    "search": "検索",
+    "lyrics": "歌詞"
+}

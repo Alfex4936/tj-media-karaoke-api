@@ -1,0 +1,10 @@
+{
+    "welcome": "TJ Media Song Search Demo",
+    "searchSong": "Search for songs",
+    "description": "Try searching for TJ Media songs/lyrics. (May not be accurate, as of July 2024)",
+    "searchPlaceholder": "Search for songs...",
+    "country": "Country",
+    "relevancyLabel": "Relevance",
+    "search": "Search",
+    "lyrics": "Lyrics"
+}

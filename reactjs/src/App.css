@@ -108,3 +108,34 @@ body {
     padding: 0 1em;
   }
 }
+
+.language-switcher {
+  text-align: right;
+  margin: 10px;
+}
+
+.language-switcher select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+  font-size: 16px;
+}
+
+.footer {
+  color: grey;
+  text-align: center;
+  padding: 10px 0;
+  font-size: 14px;
+  position: relative;
+  width: 100%;
+}
+
+.footer a {
+  color: grey;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}

@@ -1,6 +1,7 @@
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import "instantsearch.css/themes/algolia-min.css";
 import React from "react";
+import { useTranslation } from 'react-i18next';
 import {
   Configure,
   Highlight,
@@ -82,6 +83,11 @@ const segmentConsonants = input => {
 
 const App = () => {
   // const [filterLyrics, setFilterLyrics] = useState(false);
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   const queryHook = (query, refine) => {
     const segmentedQuery = segmentConsonants(query);
@@ -91,6 +97,16 @@ const App = () => {
   
   return (
     <div className="ais-InstantSearch">
+      <div className="language-switcher">
+        <select onChange={(e) => changeLanguage(e.target.value)} defaultValue={i18n.language}>
+          <option value="ko">한국어</option>
+          <option value="en">English</option>
+          <option value="ru">Русский</option>
+          <option value="ja">日本語</option>
+          <option value="es">Español</option>
+          <option value="fr">Français</option>
+        </select>
+      </div>
       <h1>
         <a
           href="#"
@@ -101,26 +117,24 @@ const App = () => {
             textDecoration: "inherit",
           }}
         >
-          TJ미디어 노래 검색 Demo
+          {t("welcome")}
         </a>
       </h1>
       <h2>
-        노래 검색{" "}
+        {t("searchSong")}{" "}
         <span role="img" aria-label="emoji">
           🎤
         </span>
       </h2>
-      <p>
-        TJ미디어 노래들을 검색해보세요. (정확하지 않을 수 있음, 2024년 7월까지)
-      </p>
+      <p>{t("description")}</p>
       <InstantSearch indexName="songs" searchClient={searchClient}>
         <div className="left-panel">
           {/* <ClearRefinements /> */}
           <SortBy
             defaultrefinement="songs"
-            items={[{ value: "songs", label: "관련순" }]}
+            items={[{ value: "songs", label: t("relevancyLabel") }]}
           />
-          <h2>국가</h2>
+          <h2>{t("country")}</h2>
           <RefinementList attribute="country" />
           <Configure
             hitsPerPage={8}
@@ -135,18 +149,23 @@ const App = () => {
         <div className="right-panel">
           <SearchBox
             autoFocus
-            placeholder={"노래를 검색해보세요..."}
+            placeholder={t("searchPlaceholder")}
             queryHook={queryHook}
           />
           <Hits hitComponent={Hit} />
           <Pagination showLast={true} totalPages={14} />
         </div>
       </InstantSearch>
+      <footer className="footer">
+        <p>Created by <a href="mailto:ikr@kakao.com">ikr@kakao.com</a></p>
+      </footer>
     </div>
   );
 };
 
 const Hit = ({ hit }) => {
+  const { t } = useTranslation();
+
   // Function to extract and display matched lyrics snippet
   const getMatchedLyricsSnippet = (highlightedLyrics) => {
     const snippet = highlightedLyrics.value;
@@ -159,13 +178,18 @@ const Hit = ({ hit }) => {
       return null;
     }
 
-    // Extract the context around the highlighted part
-    const contextBefore = snippet.slice(Math.max(0, highlightTagStart - 30), highlightTagStart);
+    // Extract the highlighted text
     const highlightedText = snippet.slice(highlightTagStart, highlightTagEnd);
-    const contextAfter = snippet.slice(highlightTagEnd, Math.min(snippet.length, highlightTagEnd + 30));
+
+    // Find word boundaries before and after the highlight to avoid cutting in the middle of words or tags
+    const contextBeforeStart = snippet.lastIndexOf(' ', Math.max(0, highlightTagStart - 30));
+    const contextBefore = snippet.slice(contextBeforeStart, highlightTagStart);
+
+    const contextAfterEnd = snippet.indexOf(' ', Math.min(snippet.length, highlightTagEnd + 30));
+    const contextAfter = snippet.slice(highlightTagEnd, contextAfterEnd);
 
     // Combine the context and the highlighted part
-    const contextSnippet = `가사: ... ${contextBefore} ${highlightedText} ${contextAfter} ...`;
+    const contextSnippet = `${t("lyrics")}: ... ${contextBefore} ${highlightedText} ${contextAfter} ...`;
 
     return (
       <div className="hit-lyrics-snippet">
@@ -194,7 +218,7 @@ const Hit = ({ hit }) => {
             target="_blank"
             rel="noopener noreferrer"
           >
-            @YouTube 검색
+            @YouTube {t("search")}
           </a>
         </div>
       )}

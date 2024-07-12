@@ -1,0 +1,10 @@
+{
+    "welcome": "Recherche de chansons TJ Media Demo",
+    "searchSong": "Recherche de chansons",
+    "description": "Essayez de rechercher des chansons/lyrics de TJ Media. (Peut ne pas être précis, jusqu'en juillet 2024)",
+    "searchPlaceholder": "Recherchez des chansons...",
+    "country": "Pays",
+    "relevancyLabel": "Pertinence",
+    "search": "Recherche",
+    "lyrics": "Paroles"
+}

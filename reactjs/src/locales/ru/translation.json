@@ -1,0 +1,10 @@
+{
+    "welcome": "Демо поиск песен TJ Media",
+    "searchSong": "Поиск песен",
+    "description": "Попробуйте найти песни/тексты TJ Media. (Может быть неточным до июля 2024 года)",
+    "searchPlaceholder": "Ищите песни...",
+    "country": "Страна",
+    "relevancyLabel": "Релевантность",
+    "search": "Поиск",
+    "lyrics": "Тексты"
+}
