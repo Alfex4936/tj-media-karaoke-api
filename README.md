@@ -1,6 +1,6 @@
 # TJ 코인 노래방 노래 검색 API
 
-![demo1](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/aae6a958-fa3c-435c-be34-909d026255cb)
+![new_demo](https://github.com/user-attachments/assets/962f89a4-b592-474c-93ee-8d1dfcd5dd7e)
 
 ![demo2](https://github.com/Alfex4936/tj-media-karaoke-api/assets/2356749/3d8e7b67-7dcd-47d6-9d69-5ec0a44eeac6)
 
