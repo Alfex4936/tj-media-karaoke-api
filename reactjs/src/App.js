@@ -2,6 +2,7 @@ import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
 import "instantsearch.css/themes/algolia-min.css";
 import React from "react";
 import { useTranslation } from 'react-i18next';
+import { FaYoutube } from 'react-icons/fa';
 import {
   Configure,
   Highlight,
@@ -199,6 +200,8 @@ const Hit = ({ hit }) => {
   };
 
   const lyricsSnippet = hit._highlightResult && hit._highlightResult.lyrics ? getMatchedLyricsSnippet(hit._highlightResult.lyrics) : null;
+  const genieSearchURL = `https://www.genie.co.kr/search/searchMain?query=${encodeURIComponent(hit.title)}%20${encodeURIComponent(hit.singer)}`;
+  const melonSearchURL = `https://www.melon.com/search/total/index.htm?q=${encodeURIComponent(hit.title)}+${encodeURIComponent(hit.singer)}&section=&mwkLogType=T`;
 
   return (
     <div key={hit.id}>
@@ -214,11 +217,32 @@ const Hit = ({ hit }) => {
         <div className="hit-info">
           <a
             href={hit.youtube_url}
-            className="custom-button"
+            className="youtube-icon"
             target="_blank"
             rel="noopener noreferrer"
+            title={`YouTube ${t("search")}`}
           >
-            @YouTube {t("search")}
+            <FaYoutube size={24} />
+          </a>
+          <a
+            href={genieSearchURL}
+            className="genie-icon"
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`Genie Music ${t("search")}`}
+            style={{ marginLeft: '10px' }}
+          >
+            <img src={`${process.env.PUBLIC_URL}/genie_logo.svg`} alt="Genie Music" style={{ width: '24px', height: '24px' }} />
+          </a>
+          <a
+            href={melonSearchURL}
+            className="melon-icon"
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`Melon Music ${t("search")}`}
+            style={{ marginLeft: '10px' }}
+          >
+            <img src={`${process.env.PUBLIC_URL}/melon_logo.svg`} alt="Melon Music" style={{ width: '24px', height: '24px' }} />
           </a>
         </div>
       )}

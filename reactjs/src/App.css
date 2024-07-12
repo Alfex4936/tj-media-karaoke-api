@@ -39,7 +39,7 @@ body {
   margin-right: 1em;
   width: 100%;
   height: 100%;
-  margin-bottom: 0.5em;
+  {{/* margin-bottom: 0.5em; */}}
 }
 
 .hit-title {
@@ -68,6 +68,24 @@ body {
 
 .custom-button:hover {
   background-color: #0056b3;
+}
+
+
+.youtube-icon {
+  color: #FF0000; /* YouTube red color */
+  font-size: 24px;
+  text-decoration: none; /* Remove underline */
+  margin-right: 10px;
+}
+
+.youtube-icon:hover {
+  color: #cc0000; /* Darker red on hover */
+}
+
+.genie-icon img {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
 }
 
 .video-container {
