@@ -1,7 +1,21 @@
 {
+    "months": {
+        "1": "January",
+        "2": "February",
+        "3": "March",
+        "4": "April",
+        "5": "May",
+        "6": "June",
+        "7": "July",
+        "8": "August",
+        "9": "September",
+        "10": "October",
+        "11": "November",
+        "12": "December"
+    },
     "welcome": "TJ Media Song Search Demo",
     "searchSong": "Search for songs",
-    "description": "Try searching for TJ Media songs/lyrics. (May not be accurate, as of July 2024)",
+    "description": "Try searching for TJ Media songs/lyrics. (May not be accurate, as of {{month}} {{year}})",
     "searchPlaceholder": "Search for songs...",
     "country": "Country",
     "relevancyLabel": "Relevance",

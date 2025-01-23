@@ -1,10 +1,26 @@
 {
     "welcome": "Recherche de chansons TJ Media Demo",
     "searchSong": "Recherche de chansons",
-    "description": "Essayez de rechercher des chansons/lyrics de TJ Media. (Peut ne pas être précis, jusqu'en juillet 2024)",
+    "description": "Essayez de rechercher des chansons/lyrics de TJ Media. (Peut ne pas être précis, jusqu'en {{month}} {{year}})",
     "searchPlaceholder": "Recherchez des chansons...",
     "country": "Pays",
     "relevancyLabel": "Pertinence",
     "search": "Recherche",
-    "lyrics": "Paroles"
-}
+    "lyrics": "Paroles",
+  
+    "months": {
+      "1": "janvier",
+      "2": "février",
+      "3": "mars",
+      "4": "avril",
+      "5": "mai",
+      "6": "juin",
+      "7": "juillet",
+      "8": "août",
+      "9": "septembre",
+      "10": "octobre",
+      "11": "novembre",
+      "12": "décembre"
+    }
+  }
+  
