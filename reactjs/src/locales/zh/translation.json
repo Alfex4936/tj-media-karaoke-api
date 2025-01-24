@@ -1,26 +1,28 @@
 {
-    "welcome": "TJ 媒体歌曲搜索演示",
-    "searchSong": "搜索歌曲",
-    "description": "尝试搜索 TJ 媒体的歌曲/歌词。（可能不准确，截止到{{year}}年{{month}}）",
-    "searchPlaceholder": "搜索歌曲...",
-    "country": "国家",
-    "relevancyLabel": "相关性",
-    "search": "搜索",
-    "lyrics": "歌词",
-  
-    "months": {
-      "1": "1月",
-      "2": "2月",
-      "3": "3月",
-      "4": "4月",
-      "5": "5月",
-      "6": "6月",
-      "7": "7月",
-      "8": "8月",
-      "9": "9月",
-      "10": "10月",
-      "11": "11月",
-      "12": "12月"
-    }
-  }
-  
+  "welcome": "TJ 媒体歌曲搜索演示",
+  "searchSong": "搜索歌曲",
+  "description": "尝试搜索 TJ 媒体的歌曲/歌词。（可能不准确，截止到{{year}}年{{month}}）",
+  "searchPlaceholder": "搜索歌曲...",
+  "country": "国家",
+  "relevancyLabel": "相关性",
+  "search": "搜索",
+  "lyrics": "歌词",
+  "months": {
+    "1": "1月",
+    "2": "2月",
+    "3": "3月",
+    "4": "4月",
+    "5": "5月",
+    "6": "6月",
+    "7": "7月",
+    "8": "8月",
+    "9": "9月",
+    "10": "10月",
+    "11": "11月",
+    "12": "12月"
+  },
+  "noFavoritesYet": "还没有收藏。",
+  "myFavorites": "我的收藏",
+  "removeAllFavorites": "删除全部收藏",
+  "removeThisFavorite": "删除此收藏"
+}

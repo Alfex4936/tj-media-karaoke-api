@@ -1,26 +1,28 @@
 {
-    "welcome": "Búsqueda de canciones de TJ Media Demo",
-    "searchSong": "Buscar canciones",
-    "description": "Intenta buscar canciones/letras de TJ Media. (Puede no ser preciso, hasta {{month}} de {{year}})",
-    "searchPlaceholder": "Busca canciones...",
-    "country": "País",
-    "relevancyLabel": "Relevancia",
-    "search": "Buscar",
-    "lyrics": "Letras",
-  
-    "months": {
-      "1": "enero",
-      "2": "febrero",
-      "3": "marzo",
-      "4": "abril",
-      "5": "mayo",
-      "6": "junio",
-      "7": "julio",
-      "8": "agosto",
-      "9": "septiembre",
-      "10": "octubre",
-      "11": "noviembre",
-      "12": "diciembre"
-    }
-  }
-  
+  "welcome": "Búsqueda de canciones de TJ Media Demo",
+  "searchSong": "Buscar canciones",
+  "description": "Intenta buscar canciones/letras de TJ Media. (Puede no ser preciso, hasta {{month}} de {{year}})",
+  "searchPlaceholder": "Busca canciones...",
+  "country": "País",
+  "relevancyLabel": "Relevancia",
+  "search": "Buscar",
+  "lyrics": "Letras",
+  "months": {
+    "1": "enero",
+    "2": "febrero",
+    "3": "marzo",
+    "4": "abril",
+    "5": "mayo",
+    "6": "junio",
+    "7": "julio",
+    "8": "agosto",
+    "9": "septiembre",
+    "10": "octubre",
+    "11": "noviembre",
+    "12": "diciembre"
+  },
+  "noFavoritesYet": "No hay favoritos todavía.",
+  "myFavorites": "Mis Favoritos",
+  "removeAllFavorites": "Eliminar todos los favoritos",
+  "removeThisFavorite": "Eliminar este favorito"
+}

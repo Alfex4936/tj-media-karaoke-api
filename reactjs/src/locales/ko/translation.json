@@ -1,26 +1,28 @@
 {
-    "welcome": "TJ미디어 노래 검색 Demo",
-    "searchSong": "노래 검색",
-    "description": "TJ미디어 노래/가사를 검색해보세요. (정확하지 않을 수 있음, {{year}}년 {{month}}까지)",
-    "searchPlaceholder": "노래를 검색해보세요...",
-    "country": "국가",
-    "relevancyLabel": "관련순",
-    "search": "검색",
-    "lyrics": "가사",
-  
-    "months": {
-      "1": "1월",
-      "2": "2월",
-      "3": "3월",
-      "4": "4월",
-      "5": "5월",
-      "6": "6월",
-      "7": "7월",
-      "8": "8월",
-      "9": "9월",
-      "10": "10월",
-      "11": "11월",
-      "12": "12월"
-    }
-  }
-  
+  "welcome": "TJ미디어 노래 검색 Demo",
+  "searchSong": "노래 검색",
+  "description": "TJ미디어 노래/가사를 검색해보세요. (정확하지 않을 수 있음, {{year}}년 {{month}}까지)",
+  "searchPlaceholder": "노래를 검색해보세요...",
+  "country": "국가",
+  "relevancyLabel": "관련순",
+  "search": "검색",
+  "lyrics": "가사",
+  "months": {
+    "1": "1월",
+    "2": "2월",
+    "3": "3월",
+    "4": "4월",
+    "5": "5월",
+    "6": "6월",
+    "7": "7월",
+    "8": "8월",
+    "9": "9월",
+    "10": "10월",
+    "11": "11월",
+    "12": "12월"
+  },
+  "noFavoritesYet": "아직 즐겨찾기가 없습니다.",
+  "myFavorites": "나의 즐겨찾기",
+  "removeAllFavorites": "전체 즐겨찾기 삭제",
+  "removeThisFavorite": "이 즐겨찾기를 삭제"
+}

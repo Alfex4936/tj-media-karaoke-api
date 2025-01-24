@@ -45,7 +45,7 @@ i18n
   .init({
     resources,
     // lng: "ko",
-    fallbackLng: "ko", // fallback language
+    fallbackLng: "en", // fallback language
     debug: false, // set to false in production
     interpolation: {
       escapeValue: false, // react already safes from xss

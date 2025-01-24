@@ -20,5 +20,10 @@
     "country": "Country",
     "relevancyLabel": "Relevance",
     "search": "Search",
-    "lyrics": "Lyrics"
+    "lyrics": "Lyrics",
+    "created_by": "Created by",
+    "noFavoritesYet": "No favorites yet.",
+    "myFavorites": "My Favorites",
+    "removeAllFavorites": "Remove all favorites",
+    "removeThisFavorite": "Remove this favorite"
 }
