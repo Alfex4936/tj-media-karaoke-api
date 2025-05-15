@@ -1,6 +1,8 @@
 # TJ 코인 노래방 노래 검색 API
 
-![new_demo](https://github.com/user-attachments/assets/b9d01d68-d2e2-4400-a746-6dfccfa0ac6b)
+![image](https://github.com/user-attachments/assets/1c8c4711-3507-4315-8215-998cdd7dea28)
+
+<!-- [new_demo](https://github.com/user-attachments/assets/b9d01d68-d2e2-4400-a746-6dfccfa0ac6b) -->
 
 <!-- ![new_demo](https://github.com/user-attachments/assets/962f89a4-b592-474c-93ee-8d1dfcd5dd7e) -->
 
