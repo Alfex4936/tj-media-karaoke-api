@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <radialGradient id="room" cx="25%" cy="12%" r="95%">
+      <stop offset="0" stop-color="#4b1f6f"/>
+      <stop offset=".55" stop-color="#1e1044"/>
+      <stop offset="1" stop-color="#140b2e"/>
+    </radialGradient>
+    <radialGradient id="ball" cx="36%" cy="30%" r="80%">
+      <stop offset="0" stop-color="#e4dcff"/>
+      <stop offset=".45" stop-color="#7d6dc8"/>
+      <stop offset="1" stop-color="#241a4f"/>
+    </radialGradient>
+    <clipPath id="sphere"><circle cx="256" cy="276" r="156"/></clipPath>
+  </defs>
+  <rect width="512" height="512" fill="url(#room)"/>
+  <line x1="256" y1="0" x2="256" y2="120" stroke="#7a6ab8" stroke-width="6"/>
+  <circle cx="256" cy="276" r="156" fill="url(#ball)"/>
+  <g clip-path="url(#sphere)" fill="none" stroke="#1b1240" stroke-width="5" opacity=".8">
+    <path d="M100 196h312M100 236h312M100 276h312M100 316h312M100 356h312M100 156h312M100 396h312"/>
+    <line x1="256" y1="110" x2="256" y2="440"/>
+    <ellipse cx="256" cy="276" rx="60" ry="156"/>
+    <ellipse cx="256" cy="276" rx="112" ry="156"/>
+    <ellipse cx="256" cy="276" rx="146" ry="156"/>
+  </g>
+  <g clip-path="url(#sphere)">
+    <rect x="176" y="198" width="34" height="34" fill="#ffffff"/>
+    <rect x="214" y="160" width="34" height="34" fill="#ffc54a"/>
+    <rect x="262" y="198" width="34" height="34" fill="#5ce6ff"/>
+    <rect x="152" y="238" width="22" height="34" fill="#ff5cc8"/>
+    <rect x="300" y="160" width="30" height="34" fill="#ffffff" opacity=".85"/>
+    <rect x="338" y="238" width="22" height="34" fill="#ff5cc8" opacity=".9"/>
+  </g>
+</svg>
